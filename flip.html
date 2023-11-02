@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Flipbook</title>
+	<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="css">
+	<style type="text/css">
+		/*   style    */
+
+		body {
+			width: 100%;
+			height: 100%;
+			/*	background: url('../img/stock-bg.jpg')!important; */
+			background: rgb(24, 26, 122);
+		}
+
+
+		#man {
+			display: block;
+			height: 962px;
+			background-repeat: no-repeat;
+			background-position: center top;
+			display: block;
+			width: 600px;
+			left: 50%;
+			margin-left: -300px;
+			position: relative;
+		}
+
+		.bad-mood {
+			display: none;
+		}
+
+		#wrapper .positive-value {
+			background-image: url('img/man.png');
+
+		}
+
+		#wrapper .negative-value {
+			background-image: url('img/man.png');
+
+		}
+
+		#response .positive-value {
+			color: green;
+			background: none;
+		}
+
+		#response .negative-value {
+			color: red;
+			background: none;
+		}
+
+		#response {
+			font-size: 12px;
+			background-color: #fff;
+			border: 1px solid #000;
+			display: inline-block;
+			padding: 10px;
+			position: absolute;
+			left: 20px;
+			top: 20px;
+		}
+
+		.select {
+			position: absolute;
+			right: 20px;
+			top: 20px;
+		}
+
+		#face {
+			position: absolute;
+			left: 198px;
+			top: -10px;
+		}
+	</style>
+</head>
+
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery.flipbook.js"></script>
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
+		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
+		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
+		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
+
+		<div class="select">
+			<button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+				Select Trading Company <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu trading-list">
+				<li><a href="#" name="GOOG">Google</a></li>
+				<li><a href="#" name="EBAY">Ebay</a></li>
+				<li><a href="#" name="AAPL">Apple</a></li>
+				<li><a href="#" name="IBM">IBM</a></li>
+				<li><a href="#" name="MSFT">Microsoft</a></li>
+				<li><a href="#" name="AMZN">Amazon</a></li>
+				<li><a href="#" name="INTC">Inter Corporation</a></li>
+				<li class="divider"></li>
+				<li><a href="#" name="SBUX">Starbucks</a></li>
+				<li><a href="#" name="MCD">McDonalds</a></li>
+				<li><a href="#" name="MCD">Unilever</a></li>
+
+			</ul>
+		</div>
+
+		<div id="response"></div>
+
+	</div> <!-- end of wrapper-->
+
+	<script type="text/javascript" src="js/jquery.incrementalmood.js"></script>
+</body>
+
+</html>
