@@ -61,17 +61,6 @@ button {
   -moz-background-size: 50%, 100% !important;
 }
 
-/*
-#man:before {
-	content: url('../img/tie/0.png'), url('../img/suit/0.png');
-	 width:0;
-		 height:0;
-		 visibility:hidden;
-
-
-}
-*/
-
 .positive-value {
   color: green;
   background: none;

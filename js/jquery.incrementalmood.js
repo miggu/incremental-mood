@@ -2,10 +2,6 @@
 
 var oldValue = "inicio";
 
-var height = $(window).height();
-
-var newFace;
-
 function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
@@ -31,13 +27,14 @@ function prepareSearch() {
 
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
 function faceChangeExpression(newFace, oldFace) {
-  $("#face").flipbook({
-    end: 4,
-    loop: false,
-    fps: 4,
-    mobileStep: 1,
-    images: "img/face/" + oldFace + "/" + newFace + "/%2d.png",
-  });
+  console.log("claudia");
+  // $("#face").flipbook({
+  //   end: 4,
+  //   loop: false,
+  //   fps: 4,
+  //   mobileStep: 1,
+  //   images: "img/face/" + oldFace + "/" + newFace + "/%2d.png",
+  // });
 }
 
 function createMan(companyCode) {
@@ -79,8 +76,8 @@ function createMan(companyCode) {
 
   var newFace = newValue == "+" ? "ba" : "ab";
 
-  console.log("oldvalue =" + oldValue);
-  console.log("newvalue =" + newValue);
+  console.log("oldvalue = " + oldValue);
+  console.log("newvalue = " + newValue);
   oldValue = newValue;
 
   if (oldValue != newValue) {
@@ -115,11 +112,12 @@ function createMan(companyCode) {
         "</span><br>" +
         StockExchange
     );
+
   prepareSearch();
 
   $("<div/>", { class: "man positive-value" })
     .appendTo("#wrapper")
-    .css("height", height)
+    .css("height", $(window).height())
     .css(
       "background",
       "url('img/tie/" + tie + ".png'),url('img/suit/" + suit + ".png')"
@@ -128,12 +126,4 @@ function createMan(companyCode) {
     .append(createResponseDiv());
 }
 
-$(document).ready(function () {
-  createMan("GOOG");
-});
-
-document
-  .getElementsByClassName("operator")[0]
-  .addEventListener("click", function () {
-    createMan("GOOG");
-  });
+createMan("GOOG");
