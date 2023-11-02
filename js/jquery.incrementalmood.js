@@ -116,7 +116,7 @@ function createMan(companyCode) {
   prepareSearch();
 
   $("<div/>", { class: "man positive-value" })
-    .appendTo("#wrapper")
+    .appendTo("#root")
     .css("height", $(window).height())
     .css(
       "background",
