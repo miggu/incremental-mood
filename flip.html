@@ -3,7 +3,7 @@
 
 <head>
 	<title>Flipbook</title>
-	<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="css">
+
 	<style type="text/css">
 		/*   style    */
 
@@ -14,38 +14,20 @@
 			background: rgb(24, 26, 122);
 		}
 
-
-		#man {
-			display: block;
-			height: 962px;
-			background-repeat: no-repeat;
-			background-position: center top;
-			display: block;
-			width: 600px;
-			left: 50%;
-			margin-left: -300px;
-			position: relative;
-		}
-
 		.bad-mood {
 			display: none;
 		}
-
 		#wrapper .positive-value {
 			background-image: url('img/man.png');
-
 		}
 
 		#wrapper .negative-value {
 			background-image: url('img/man.png');
-
 		}
-
 		#response .positive-value {
 			color: green;
 			background: none;
 		}
-
 		#response .negative-value {
 			color: red;
 			background: none;
@@ -74,6 +56,7 @@
 			top: -10px;
 		}
 	</style>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
@@ -84,11 +67,15 @@
 
 <body>
 
-	<div id="wrapper">
-		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
-		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
-		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
-		<div id="man" class="positive-value"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" /></div>
+	<div id="root">
+		<div class="positive-value man "><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" />
+		</div>
+		<div class="positive-value man"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" />
+		</div>
+		<div class="positive-value man"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" />
+		</div>
+		<div class="positive-value man"><img id="face" images="img/ba/%2d.png" end="4" loop="false" fps="4" />
+		</div>
 
 		<div class="select">
 			<button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
