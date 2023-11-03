@@ -6,6 +6,10 @@ function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
 
+const root = document.getElementById("root");
+
+root.style.height = `${window.innerHeight}px`;
+
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
 function prepareSearch() {
   $(".company_profile").bind("click", function () {
@@ -54,6 +58,11 @@ function createMan(companyCode) {
     },
   };
 
+  const createResponseDiv = () =>
+    $("<div/>", { class: "response" }).html(
+      `<span class='company_profile'>${Name} (<span class='company-symbol'>${symbol}</span>) </span><br> ${LastTradePriceOnly} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`
+    );
+
   var Name = data.query.results.quote.Name,
     LastTradePriceOnly = data.query.results.quote.LastTradePriceOnly,
     symbol = data.query.results.quote.symbol,
@@ -93,37 +102,23 @@ function createMan(companyCode) {
     images: "img/face/" + face + "/" + "ab" + "/%2d.png",
   });
 
-  const faceDiv = $("<div/>", $.extend({}, { class: "face-wrapper" })).append(
-    faceImg
-  );
-
-  const createResponseDiv = () =>
-    $("<div/>", { class: "response" }).html(
-      "<span class='company_profile'>" +
-        Name +
-        " (<span class='company-symbol'>" +
-        symbol +
-        "</span>) </span><br> " +
-        LastTradePriceOnly +
-        " <span class=" +
-        signClass +
-        ">" +
-        Change_PercentChange +
-        "</span><br>" +
-        StockExchange
-    );
-
   prepareSearch();
 
-  $("<div/>", { class: "man positive-value" })
-    .appendTo("#root")
-    .css("height", $(window).height())
-    .css(
-      "background",
-      "url('img/tie/" + tie + ".png'),url('img/suit/" + suit + ".png')"
-    )
-    .append(faceDiv)
-    .append(createResponseDiv());
+  // root.appendChild()
+
+  const man = document.createElement("div");
+  man.classList.add("man");
+  man.classList.add("positive-value");
+  man.style.background =
+    "url('img/tie/" + tie + ".png'),url('img/suit/" + suit + ".png')";
+
+  const faceDiva = document.createElement("img");
+  faceDiva.classList.add("face");
+
+  man.appendChild(faceImg[0]);
+  man.appendChild(createResponseDiv()[0]);
+
+  root.appendChild(man);
 }
 
 createMan("GOOG");
