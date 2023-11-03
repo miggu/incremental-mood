@@ -1,16 +1,28 @@
 /* Miguel Gomez & Claudia Mate */
 
+// const key = "K0IDU5K6OS8JKB74";
+// url`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${quote}&apikey=${key}`;
 var oldValue = "inicio";
 
 function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
+}
+//move this function to the private closure
+function getQuote(quote) {
+  return fetch(
+    `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${quote}&apikey=K0IDU5K6OS8JKB74`
+  ).then((res) => res.json());
 }
 
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
 function prepareSearch() {
   root.addEventListener("click", function ({ target, target: { className } }) {
     if (className !== "company_profile") return;
+    function setPrice(price) {
+      console.log(price["Global Quote"]["05. price"]);
+    }
 
+    getQuote("AAPL", setPrice);
     $(target).fadeOut(function () {
       $("<div/>", {
         id: "jquery-live-search-example",
@@ -56,10 +68,13 @@ function createMan(companyCode) {
     },
   };
 
-  const createResponseDiv = () =>
+  const createResponseDiv = (lastPrice) =>
+    console.log(lastPrice) ||
     $("<div/>", { class: "response" }).html(
-      `<span class='company_profile'>${Name} (<span class='company-symbol'>${symbol}</span>) </span><br> ${LastTradePriceOnly} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`
+      `<span class='company_profile'>${Name} (<span class='company-symbol'>${symbol}</span>) </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`
     );
+
+  getQuote(companyCode).then(createResponseDiv);
 
   var Name = data.query.results.quote.Name,
     LastTradePriceOnly = data.query.results.quote.LastTradePriceOnly,
@@ -110,8 +125,6 @@ function createMan(companyCode) {
   man.appendChild(faceImg[0]);
   man.appendChild(createResponseDiv()[0]);
   root.appendChild(man);
-
- 
 }
 
 document.addEventListener("DOMContentLoaded", () => {
