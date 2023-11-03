@@ -6,19 +6,17 @@ function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
 
-const root = document.getElementById("root");
-
-root.style.height = `${window.innerHeight}px`;
-
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
 function prepareSearch() {
-  $(".company_profile").bind("click", function () {
-    $(this).fadeOut(function () {
+  root.addEventListener("click", function ({ target, target: { className } }) {
+    if (className !== "company_profile") return;
+
+    $(target).fadeOut(function () {
       $("<div/>", {
         id: "jquery-live-search-example",
         class: "myClass",
         html: '<input type="text" name="q">',
-      }).prependTo("#response"); // end of creating div and prepending
+      }).insertAfter($(this)); // end of creating div and prepending
 
       // now we can activate the live search
 
@@ -85,8 +83,6 @@ function createMan(companyCode) {
 
   var newFace = newValue == "+" ? "ba" : "ab";
 
-  console.log("oldvalue = " + oldValue);
-  console.log("newvalue = " + newValue);
   oldValue = newValue;
 
   if (oldValue != newValue) {
@@ -102,10 +98,6 @@ function createMan(companyCode) {
     images: "img/face/" + face + "/" + "ab" + "/%2d.png",
   });
 
-  prepareSearch();
-
-  // root.appendChild()
-
   const man = document.createElement("div");
   man.classList.add("man");
   man.classList.add("positive-value");
@@ -117,8 +109,14 @@ function createMan(companyCode) {
 
   man.appendChild(faceImg[0]);
   man.appendChild(createResponseDiv()[0]);
-
   root.appendChild(man);
+
+ 
 }
 
-createMan("GOOG");
+document.addEventListener("DOMContentLoaded", () => {
+  root.style.height = `${window.innerHeight}px`;
+
+  createMan("GOOG");
+  prepareSearch();
+});
