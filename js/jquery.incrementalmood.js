@@ -1,25 +1,25 @@
 /* Miguel Gomez & Claudia Mate */
 
-// const key = "K0IDU5K6OS8JKB74";
-// url`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${quote}&apikey=${key}`;
 var oldValue = "inicio";
 
 function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
 //move this function to the private closure
-function getQuote(quote) {
+function getQuote(quote, fn = () => {}) {
   return fetch(
-    `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${quote}&apikey=K0IDU5K6OS8JKB74`
-  ).then((res) => res.json());
+    `https://api.polygon.io/v2/aggs/ticker/${quote}/prev?adjusted=true&apiKey=DIxVAYuZEg9psGM2t4qQiEqcsIIgZUoJ `
+  )
+    .then((res) => res.json())
+    .then(fn);
 }
 
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
 function prepareSearch() {
   root.addEventListener("click", function ({ target, target: { className } }) {
     if (className !== "company_profile") return;
-    function setPrice(price) {
-      console.log(price["Global Quote"]["05. price"]);
+    function setPrice({ results: [{ o: lastPrice }] }) {
+      console.log("from set price ", lastPrice);
     }
 
     getQuote("AAPL", setPrice);
@@ -68,13 +68,12 @@ function createMan(companyCode) {
     },
   };
 
-  const createResponseDiv = (lastPrice) =>
-    console.log(lastPrice) ||
-    $("<div/>", { class: "response" }).html(
-      `<span class='company_profile'>${Name} (<span class='company-symbol'>${symbol}</span>) </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`
-    );
-
-  getQuote(companyCode).then(createResponseDiv);
+  const createResponseDiv = ({ results: [{ o: lastPrice }] }) => {
+    const response = document.createElement("div");
+    response.classList.add("response");
+    response.innerHTML = `<span class='company_profile'>${Name} (<span class='company-symbol'>${symbol}</span>) </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`;
+    man.appendChild(response);
+  };
 
   var Name = data.query.results.quote.Name,
     LastTradePriceOnly = data.query.results.quote.LastTradePriceOnly,
@@ -123,7 +122,8 @@ function createMan(companyCode) {
   faceDiva.classList.add("face");
 
   man.appendChild(faceImg[0]);
-  man.appendChild(createResponseDiv()[0]);
+  //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
+  getQuote("AAPL", createResponseDiv);
   root.appendChild(man);
 }
 
