@@ -68,10 +68,11 @@ function createMan(companyCode) {
     },
   };
 
-  const createResponseDiv = ({ results: [{ o: lastPrice }] }) => {
+  const createResponseDiv = ({ ticker, results: [{ o: lastPrice }] }) => {
     const response = document.createElement("div");
     response.classList.add("response");
-    response.innerHTML = `<span class='company_profile'>${Name} (<span class='company-symbol'>${symbol}</span>) </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`;
+    response.innerHTML = `<!--<span class='company_profile'>${Name}--><span class='company-symbol'>${ticker}</span>
+     </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`;
     man.appendChild(response);
   };
 
@@ -123,7 +124,7 @@ function createMan(companyCode) {
 
   man.appendChild(faceImg[0]);
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
-  getQuote("AAPL", createResponseDiv);
+  getQuote(companyCode, createResponseDiv);
   root.appendChild(man);
 }
 
