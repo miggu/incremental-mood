@@ -85,7 +85,7 @@ button {
   -moz-border-radius: 2px;
   border-radius: 2px;
   color: #737272;
-  font-family: monospace;
+  font-family: Helvetica, Arial;
 }
 
 .select {
