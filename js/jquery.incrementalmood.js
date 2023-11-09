@@ -2,6 +2,21 @@
 
 var oldValue = "inicio";
 
+const sp500 = [
+  ["AMZN", "Amazon"],
+  ["GOOG", "Google"],
+  ["ADBE", "Adobe"],
+  ["MCD", "Macdonalds"],
+  ["IBM", "IBM"],
+  ["MSFT", "Amazon"],
+  ["EBAY", "Amazon"],
+  ["DPZ", "Domino's Pizza"],
+  ["DLTR", "Dolar tree"],
+  ["META", "META"],
+];
+
+const getRandomSP500 = () => sp500[randomizer(sp500.length)][0];
+
 function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
@@ -130,7 +145,7 @@ function createMan(companyCode) {
 
 document.addEventListener("DOMContentLoaded", () => {
   root.style.height = `${window.innerHeight}px`;
-
-  createMan("GOOG");
+  
+  createMan(getRandomSP500());
   prepareSearch();
 });
