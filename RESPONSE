@@ -1,0 +1,33 @@
+HTTP/1.1 200 OK
+Server: nginx/1.19.2
+Date: Fri, 03 Nov 2023 22:10:53 GMT
+Content-Type: application/json
+Content-Length: 214
+Connection: close
+Content-Encoding: gzip
+Vary: Accept-Encoding
+X-Request-Id: b00cf4d932f46ef31ec860892ca99803
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+
+{
+  "ticker": "AAPL",
+  "queryCount": 1,
+  "resultsCount": 1,
+  "adjusted": true,
+  "results": [
+    {
+      "T": "AAPL",
+      "v": 7.7292052e+07,
+      "vw": 176.6794,
+      "o": 175.52,
+      "c": 177.57,
+      "h": 177.78,
+      "l": 175.46,
+      "t": 1698955200000,
+      "n": 805046
+    }
+  ],
+  "status": "OK",
+  "request_id": "b00cf4d932f46ef31ec860892ca99803",
+  "count": 1
+}

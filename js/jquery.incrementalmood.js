@@ -1,5 +1,6 @@
 /* Miguel Gomez & Claudia Mate */
 
+
 var oldValue = "inicio";
 
 const sp500 = [
@@ -13,6 +14,8 @@ const sp500 = [
   ["DPZ", "Domino's Pizza"],
   ["DLTR", "Dolar tree"],
   ["META", "META"],
+  ["TSLA", "Tesla"],
+  ["MNST", "Monster Beverage Corporation"],
 ];
 
 const getRandomSP500 = () => sp500[randomizer(sp500.length)][0];
