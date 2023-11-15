@@ -1,3 +1,10 @@
+// This endpoint is called previous close
+https://api.polygon.io/v2/aggs/ticker/AAPL/prev?adjusted=true&apiKey=DIxVAYuZEg9psGM2t4qQiEqcsIIgZUoJ
+
+prev is the variable that determines this. Prev could be substitued by a specific date
+
+
+
 HTTP/1.1 200 OK
 Server: nginx/1.19.2
 Date: Fri, 03 Nov 2023 22:10:53 GMT
