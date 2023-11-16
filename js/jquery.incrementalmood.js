@@ -58,13 +58,13 @@ function prepareSearch() {
 }
 
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
-function faceChangeExpression($face, newFace, oldFace) {
+function faceChangeExpression($face, newFace, face) {
   $face.flipbook({
     end: 4,
     loop: false,
     fps: 4,
     mobileStep: 1,
-    images: "img/face/" + oldFace + "/" + newFace + "/%2d.png",
+    images: "img/face/" + face + "/" + newFace + "/%2d.png",
   });
 }
 
