@@ -1,6 +1,5 @@
 /* Miguel Gomez & Claudia Mate */
 
-
 var oldValue = "inicio";
 
 const sp500 = [
@@ -19,6 +18,7 @@ const sp500 = [
 ];
 
 const getRandomSP500 = () => sp500[randomizer(sp500.length)][0];
+const randomIncrement = (value) => Math.random() * value;
 
 function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
@@ -58,15 +58,14 @@ function prepareSearch() {
 }
 
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
-function faceChangeExpression(newFace, oldFace) {
-  console.log("claudia");
-  // $("#face").flipbook({
-  //   end: 4,
-  //   loop: false,
-  //   fps: 4,
-  //   mobileStep: 1,
-  //   images: "img/face/" + oldFace + "/" + newFace + "/%2d.png",
-  // });
+function faceChangeExpression($face, newFace, oldFace) {
+  $face.flipbook({
+    end: 4,
+    loop: false,
+    fps: 4,
+    mobileStep: 1,
+    images: "img/face/" + oldFace + "/" + newFace + "/%2d.png",
+  });
 }
 
 function createMan(companyCode) {
@@ -100,7 +99,6 @@ function createMan(companyCode) {
     change = data.query.results.quote.Change,
     Change_PercentChange = data.query.results.quote.Change_PercentChange,
     StockExchange = data.query.results.quote.StockExchange;
-  /////
 
   var suit = randomizer(3),
     tie = randomizer(5),
@@ -144,11 +142,19 @@ function createMan(companyCode) {
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
   getQuote(companyCode, createResponseDiv);
   root.appendChild(man);
+
+  return { man, faceImg, face };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   root.style.height = `${window.innerHeight}px`;
-  
-  createMan(getRandomSP500());
+
+  const { faceImg, face } = createMan(getRandomSP500());
+
+  setInterval(() => {
+    const randomDelta = (randomIncrement(2) - 1).toFixed(2);
+    faceChangeExpression(faceImg, randomDelta > 0 ? `ab` : `ba`, face);
+  }, 3000);
+
   prepareSearch();
 });
