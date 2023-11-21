@@ -102,7 +102,7 @@ function createMan(companyCode) {
 
   var suit = randomizer(3),
     tie = randomizer(5),
-    face = randomizer(4);
+    face = randomizer(5);
 
   var newFace;
   var signClass = "";
