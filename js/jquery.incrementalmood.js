@@ -17,7 +17,7 @@ const sp500 = [
   ["MNST", "Monster Beverage Corporation"],
 ];
 
-const getRandomSP500 = () => sp500[randomizer(sp500.length)][0];
+const getRandomSP500 = () => sp500[randomizer(sp500.length + 1)][0];
 const randomIncrement = (value) => Math.random() * value;
 
 function randomizer(n) {
@@ -58,13 +58,13 @@ function prepareSearch() {
 }
 
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
-function faceChangeExpression($face, newFace, face) {
+function faceChangeExpression($face, newFace, faceNumber) {
   $face.flipbook({
     end: 4,
     loop: false,
     fps: 4,
     mobileStep: 1,
-    images: "img/face/" + face + "/" + newFace + "/%2d.png",
+    images: "img/face/" + faceNumber + "/" + newFace + "/%2d.png",
   });
 }
 
@@ -100,9 +100,9 @@ function createMan(companyCode) {
     Change_PercentChange = data.query.results.quote.Change_PercentChange,
     StockExchange = data.query.results.quote.StockExchange;
 
-  var suit = randomizer(3),
-    tie = randomizer(5),
-    face = randomizer(5);
+  var suitNumber = randomizer(3),
+    tieNumber = randomizer(5),
+    faceNumber = randomizer(5);
 
   var newFace;
   var signClass = "";
@@ -117,7 +117,6 @@ function createMan(companyCode) {
   oldValue = newValue;
 
   if (oldValue != newValue) {
-    console.log("oldvalue", oldValue, "newValue", newValue);
     faceChangeExpression(newValue ? "ba" : newFace, face);
   }
   const faceImg = $("<img/>", { class: "face" }).flipbook({
@@ -126,14 +125,17 @@ function createMan(companyCode) {
     loop: false,
     fps: 4,
     mobileStep: 1,
-    images: "img/face/" + face + "/" + "ab" + "/%2d.png",
+    images: "img/face/" + faceNumber + "/" + "ab" + "/%2d.png",
   });
 
   const man = document.createElement("div");
   man.classList.add("man");
-  man.classList.add("positive-value");
   man.style.background =
-    "url('img/tie/" + tie + ".png'),url('img/suit/" + suit + ".png')";
+    "url('img/tie/" +
+    tieNumber +
+    ".png'),url('img/suit/" +
+    suitNumber +
+    ".png')";
 
   const faceDiva = document.createElement("img");
   faceDiva.classList.add("face");
@@ -143,17 +145,29 @@ function createMan(companyCode) {
   getQuote(companyCode, createResponseDiv);
   root.appendChild(man);
 
-  return { man, faceImg, face };
+  return { man, faceImg, faceNumber };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   root.style.height = `${window.innerHeight}px`;
 
-  const { faceImg, face } = createMan(getRandomSP500());
+  let value;
+  const { man, faceImg, faceNumber } = createMan(getRandomSP500());
 
   setInterval(() => {
     const randomDelta = (randomIncrement(2) - 1).toFixed(2);
-    faceChangeExpression(faceImg, randomDelta > 0 ? `ab` : `ba`, face);
+
+    value = randomDelta > 0 ? `ab` : `ba`;
+
+    console.log(man.classList.contains(value));
+
+    man.classList.contains(value)
+      ? () => {}
+      : (function () {
+          man.classList.add(value);
+          faceChangeExpression(faceImg, value, faceNumber);
+          man.classList.remove(value[1] + value[0]);
+        })();
   }, 3000);
 
   prepareSearch();
