@@ -1,7 +1,5 @@
 /* Miguel Gomez & Claudia Mate */
 
-var oldValue = "inicio";
-
 const sp500 = [
   ["AMZN", "Amazon"],
   ["GOOG", "Google"],
@@ -29,7 +27,8 @@ function getQuote(quote, fn = () => {}) {
     `https://api.polygon.io/v2/aggs/ticker/${quote}/prev?adjusted=true&apiKey=DIxVAYuZEg9psGM2t4qQiEqcsIIgZUoJ `
   )
     .then((res) => res.json())
-    .then(fn);
+    .then(fn)
+    .catch(console.error);
 }
 
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
@@ -69,39 +68,22 @@ function faceChangeExpression($face, newFace, faceNumber) {
 }
 
 function createMan(companyCode) {
-  const data = {
-    query: {
-      results: {
-        quote: {
-          Name: "Apple INC",
-          LastTradePriceOnly: 173.97,
-          symbol: "AAPL",
-          Change: (Math.random() * 10 - 5).toFixed(2),
-          Change_PercentChange: (Math.random() * 10 - 5).toFixed(2),
-          StockExchange: "NASDAQ",
-        },
-        Change: "basura",
-      },
-    },
-  };
 
   // creates minibox
-  const createResponseDiv = ({ ticker, results: [{ o: lastPrice }] }) => {
+  const createInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
     const response = document.createElement("div");
     response.classList.add("response");
-    response.innerHTML = `<!--<span class='company_profile'>${Name}--><span class='company-symbol'>${ticker}</span>
+
+    const change = (Math.random() * 10 - 5).toFixed(2);
+
+    response.innerHTML = `<span class='company-symbol'>${ticker}</span>
      </span><br> ${lastPrice} <span class=${
       change > 0 ? `ba` : `ab`
-    }>${Change_PercentChange}</span><br>${StockExchange}`;
+    }>${change}</span><br>NASDAQ`;
     man.appendChild(response);
   };
 
-  var Name = data.query.results.quote.Name,
-    change = data.query.results.quote.Change,
-    Change_PercentChange = data.query.results.quote.Change_PercentChange,
-    StockExchange = data.query.results.quote.StockExchange;
-
-  var suitNumber = randomizer(3),
+  const suitNumber = randomizer(3),
     tieNumber = randomizer(5),
     faceNumber = randomizer(5);
 
@@ -123,12 +105,12 @@ function createMan(companyCode) {
     suitNumber +
     ".png')";
 
-  const faceDiva = document.createElement("img");
-  faceDiva.classList.add("face");
+  const face = document.createElement("img");
+  face.classList.add("face");
 
   man.appendChild(faceImg[0]);
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
-  getQuote(companyCode, createResponseDiv);
+  getQuote(companyCode, createInfoBox);
   root.appendChild(man);
 
   let value;
