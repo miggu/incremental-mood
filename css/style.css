@@ -61,12 +61,12 @@ button {
   -moz-background-size: 50%, 100% !important;
 }
 
-.positive-value {
+.ba {
   color: green;
   background: none;
 }
 
-.negative-value {
+.ab {
   color: red;
   background: none;
 }

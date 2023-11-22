@@ -85,17 +85,18 @@ function createMan(companyCode) {
     },
   };
 
+  // creates minibox
   const createResponseDiv = ({ ticker, results: [{ o: lastPrice }] }) => {
     const response = document.createElement("div");
     response.classList.add("response");
     response.innerHTML = `<!--<span class='company_profile'>${Name}--><span class='company-symbol'>${ticker}</span>
-     </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`;
+     </span><br> ${lastPrice} <span class=${
+      change > 0 ? `ba` : `ab`
+    }>${Change_PercentChange}</span><br>${StockExchange}`;
     man.appendChild(response);
   };
 
   var Name = data.query.results.quote.Name,
-    LastTradePriceOnly = data.query.results.quote.LastTradePriceOnly,
-    symbol = data.query.results.quote.symbol,
     change = data.query.results.quote.Change,
     Change_PercentChange = data.query.results.quote.Change_PercentChange,
     StockExchange = data.query.results.quote.StockExchange;
@@ -104,21 +105,6 @@ function createMan(companyCode) {
     tieNumber = randomizer(5),
     faceNumber = randomizer(5);
 
-  var newFace;
-  var signClass = "";
-
-  var newValue = change > 0;
-
-  // this will make the percentage red or green assigning a class later on
-  var signClass = newValue ? "positive-value" : "negative-value";
-
-  var newFace = newValue == "+" ? "ba" : "ab";
-
-  oldValue = newValue;
-
-  if (oldValue != newValue) {
-    faceChangeExpression(newValue ? "ba" : newFace, face);
-  }
   const faceImg = $("<img/>", { class: "face" }).flipbook({
     class: "face",
     end: 4,
