@@ -145,15 +145,7 @@ function createMan(companyCode) {
   getQuote(companyCode, createResponseDiv);
   root.appendChild(man);
 
-  return { man, faceImg, faceNumber };
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  root.style.height = `${window.innerHeight}px`;
-
   let value;
-  const { man, faceImg, faceNumber } = createMan(getRandomSP500());
-
   setInterval(() => {
     const randomDelta = (randomIncrement(2) - 1).toFixed(2);
 
@@ -169,6 +161,14 @@ document.addEventListener("DOMContentLoaded", () => {
           man.classList.remove(value[1] + value[0]);
         })();
   }, 3000);
+
+  return { man, faceImg, faceNumber };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  root.style.height = `${window.innerHeight}px`;
+
+  createMan(getRandomSP500());
 
   prepareSearch();
 });
