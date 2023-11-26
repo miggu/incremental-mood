@@ -50,6 +50,7 @@
 
       //find image parts
       var images = $image.attr("images") || options.images;
+      console.log(images);
       var imagesMatch = images.match(/([^%]*)%(\d?)d(.*)/);
       if (imagesMatch === null) {
         console.error(

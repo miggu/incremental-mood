@@ -11,7 +11,7 @@ const defaultOptions = {
 };
 
 function flipbook(el, options = defaultOptions) {
-  var animatingAttr = "flipbook_animating";
+  const animatingAttr = "flipbook_animating";
 
   function clamp(value, min) {
     if (value < min) {
@@ -28,6 +28,26 @@ function flipbook(el, options = defaultOptions) {
     }
     return frameString;
   }
+
+  const image = el;
+
+  // check if image is animating
+  if (image.getAttribute(animatingAttr) === "true") return;
+
+  // collecting images
+
+  const images = image.getAttribute(images) || options.images;
+  const imagesMatch = images.match(/([^%]*)%(\d?)d(.*)/);
+  if (imagesMatch === null) {
+    console.error(
+      '"' +
+        images +
+        '" does not conform to images convention, it should be like "frame.%d.jpg" or "frame.%4d.jpg"'
+    );
+    return;
+  }
+
+
 
 
   
