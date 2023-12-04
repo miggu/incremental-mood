@@ -1,7 +1,5 @@
 /* Miguel Gomez & Claudia Mate */
 
-var oldValue = "inicio";
-
 const sp500 = [
   ["AMZN", "Amazon"],
   ["GOOG", "Google"],
@@ -29,7 +27,8 @@ function getQuote(quote, fn = () => {}) {
     `https://api.polygon.io/v2/aggs/ticker/${quote}/prev?adjusted=true&apiKey=DIxVAYuZEg9psGM2t4qQiEqcsIIgZUoJ `
   )
     .then((res) => res.json())
-    .then(fn);
+    .then(fn)
+    .catch(console.error);
 }
 
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
@@ -58,8 +57,8 @@ function prepareSearch() {
 }
 
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
-function faceChangeExpression($face, newFace, faceNumber) {
-  $face.flipbook({
+function faceChangeExpression(img, newFace, faceNumber) {
+  flipbook(img, {
     end: 4,
     loop: false,
     fps: 4,
@@ -69,56 +68,25 @@ function faceChangeExpression($face, newFace, faceNumber) {
 }
 
 function createMan(companyCode) {
-  const data = {
-    query: {
-      results: {
-        quote: {
-          Name: "Apple INC",
-          LastTradePriceOnly: 173.97,
-          symbol: "AAPL",
-          Change: (Math.random() * 10 - 5).toFixed(2),
-          Change_PercentChange: (Math.random() * 10 - 5).toFixed(2),
-          StockExchange: "NASDAQ",
-        },
-        Change: "basura",
-      },
-    },
-  };
 
-  const createResponseDiv = ({ ticker, results: [{ o: lastPrice }] }) => {
+  // creates minibox
+  const createInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
     const response = document.createElement("div");
     response.classList.add("response");
-    response.innerHTML = `<!--<span class='company_profile'>${Name}--><span class='company-symbol'>${ticker}</span>
-     </span><br> ${lastPrice} <span class=${signClass}>${Change_PercentChange}</span><br>${StockExchange}`;
+
+    const change = (Math.random() * 10 - 5).toFixed(2);
+
+    response.innerHTML = `<span class='company-symbol'>${ticker}</span>
+     </span><br> ${lastPrice} <span class=${
+      change > 0 ? `ba` : `ab`
+    }>${change}</span><br>NASDAQ`;
     man.appendChild(response);
   };
 
-  var Name = data.query.results.quote.Name,
-    LastTradePriceOnly = data.query.results.quote.LastTradePriceOnly,
-    symbol = data.query.results.quote.symbol,
-    change = data.query.results.quote.Change,
-    Change_PercentChange = data.query.results.quote.Change_PercentChange,
-    StockExchange = data.query.results.quote.StockExchange;
-
-  var suitNumber = randomizer(3),
+  const suitNumber = randomizer(3),
     tieNumber = randomizer(5),
     faceNumber = randomizer(5);
 
-  var newFace;
-  var signClass = "";
-
-  var newValue = change > 0;
-
-  // this will make the percentage red or green assigning a class later on
-  var signClass = newValue ? "positive-value" : "negative-value";
-
-  var newFace = newValue == "+" ? "ba" : "ab";
-
-  oldValue = newValue;
-
-  if (oldValue != newValue) {
-    faceChangeExpression(newValue ? "ba" : newFace, face);
-  }
   const faceImg = $("<img/>", { class: "face" }).flipbook({
     class: "face",
     end: 4,
@@ -137,12 +105,25 @@ function createMan(companyCode) {
     suitNumber +
     ".png')";
 
-  const faceDiva = document.createElement("img");
-  faceDiva.classList.add("face");
+  const face = document.createElement("img");
+  face.classList.add("face");
 
-  man.appendChild(faceImg[0]);
+  //  this is how we added the jquery moving face
+  // man.appendChild(faceImg[0]);
+
+  man.appendChild(
+    flipbook(face, {
+      class: "face",
+      end: 4,
+      loop: false,
+      fps: 4,
+      mobileStep: 1,
+      images: "img/face/" + faceNumber + "/" + "ab" + "/%2d.png",
+    })
+  );
+
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
-  getQuote(companyCode, createResponseDiv);
+  getQuote(companyCode, createInfoBox);
   root.appendChild(man);
 
   let value;
@@ -151,13 +132,11 @@ function createMan(companyCode) {
 
     value = randomDelta > 0 ? `ab` : `ba`;
 
-    console.log(man.classList.contains(value));
-
     man.classList.contains(value)
       ? () => {}
       : (function () {
           man.classList.add(value);
-          faceChangeExpression(faceImg, value, faceNumber);
+          faceChangeExpression(face, value, faceNumber);
           man.classList.remove(value[1] + value[0]);
         })();
   }, 3000);

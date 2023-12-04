@@ -61,12 +61,12 @@ button {
   -moz-background-size: 50%, 100% !important;
 }
 
-.positive-value {
+.ba {
   color: green;
   background: none;
 }
 
-.negative-value {
+.ab {
   color: red;
   background: none;
 }
@@ -128,4 +128,11 @@ div#result ul {
 .company-symbol {
   text-shadow: 0 0 7px #fff, 0 0 3px #fff, 0 0 6px #fff, 0 0 1px #0fa,
     0 0 10px #0fa, 0 0 16px #0fa, 0 0 18px #0fa, 0 0 28px #0fa;
+}
+
+.example001 {
+  position: fixed;
+  top: 1px;
+  background: white;
+  font-size: 30px;
 }
