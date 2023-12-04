@@ -87,16 +87,8 @@ function createMan(companyCode) {
     tieNumber = randomizer(5),
     faceNumber = randomizer(5);
 
-  const faceImg = $("<img/>", { class: "face" }).flipbook({
-    class: "face",
-    end: 4,
-    loop: false,
-    fps: 4,
-    mobileStep: 1,
-    images: "img/face/" + faceNumber + "/" + "ab" + "/%2d.png",
-  });
 
-  const man = document.createElement("div");
+    const man = document.createElement("div");
   man.classList.add("man");
   man.style.background =
     "url('img/tie/" +
@@ -110,7 +102,6 @@ function createMan(companyCode) {
 
   //  this is how we added the jquery moving face
   // man.appendChild(faceImg[0]);
-
   man.appendChild(
     flipbook(face, {
       class: "face",
@@ -141,7 +132,7 @@ function createMan(companyCode) {
         })();
   }, 3000);
 
-  return { man, faceImg, faceNumber };
+  return { man, face, faceNumber };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
