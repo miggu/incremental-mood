@@ -57,8 +57,8 @@ function prepareSearch() {
 }
 
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
-function faceChangeExpression($face, newFace, faceNumber) {
-  $face.flipbook({
+function faceChangeExpression(img, newFace, faceNumber) {
+  flipbook(img, {
     end: 4,
     loop: false,
     fps: 4,
@@ -108,7 +108,20 @@ function createMan(companyCode) {
   const face = document.createElement("img");
   face.classList.add("face");
 
-  man.appendChild(faceImg[0]);
+  //  this is how we added the jquery moving face
+  // man.appendChild(faceImg[0]);
+
+  man.appendChild(
+    flipbook(face, {
+      class: "face",
+      end: 4,
+      loop: false,
+      fps: 4,
+      mobileStep: 1,
+      images: "img/face/" + faceNumber + "/" + "ab" + "/%2d.png",
+    })
+  );
+
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
   getQuote(companyCode, createInfoBox);
   root.appendChild(man);
@@ -119,13 +132,11 @@ function createMan(companyCode) {
 
     value = randomDelta > 0 ? `ab` : `ba`;
 
-    console.log(man.classList.contains(value));
-
     man.classList.contains(value)
       ? () => {}
       : (function () {
           man.classList.add(value);
-          faceChangeExpression(faceImg, value, faceNumber);
+          faceChangeExpression(face, value, faceNumber);
           man.classList.remove(value[1] + value[0]);
         })();
   }, 3000);

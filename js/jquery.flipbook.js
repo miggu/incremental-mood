@@ -50,7 +50,7 @@
 
       //find image parts
       var images = $image.attr("images") || options.images;
-      console.log(images);
+
       var imagesMatch = images.match(/([^%]*)%(\d?)d(.*)/);
       if (imagesMatch === null) {
         console.error(
@@ -123,7 +123,6 @@
         //if we haven't reached the end yet update
         //the image and start the cycle again
         if (frameNumber <= end) {
-          //console.log('set: '+imageName(frameNumber));
           $image.attr("src", imageName(frameNumber));
           setTimeout(flipImage, holdTime);
         } else {
