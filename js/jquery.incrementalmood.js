@@ -15,7 +15,9 @@ const sp500 = [
   ["MNST", "Monster Beverage Corporation"],
 ];
 
-const getRandomSP500 = () => sp500[randomizer(sp500.length + 1)][0];
+const getRandomSP500 = (companies) =>
+  companies[randomizer(companies.length - 1)][0];
+
 const randomIncrement = (value) => Math.random() * value;
 
 function randomizer(n) {
@@ -34,10 +36,8 @@ function getQuote(quote, fn = () => {}) {
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
 function prepareSearch() {
   root.addEventListener("click", function ({ target, target: { className } }) {
-    if (className !== "company_profile") return;
-    function setPrice({ results: [{ o: lastPrice }] }) {
-      console.log("from set price ", lastPrice);
-    }
+    if (className !== "company-symbol") return;
+    function setPrice({ results: [{ o: lastPrice }] }) {}
 
     getQuote("AAPL", setPrice);
     $(target).fadeOut(function () {
@@ -50,7 +50,7 @@ function prepareSearch() {
       // now we can activate the live search
 
       $('#jquery-live-search-example input[name="q"]')
-        .liveSearch({ url: "ajax/search.php" + "?q=" })
+        .liveSearch({ url: "companies.json" + "?q=" })
         .focus();
     });
   });
@@ -138,7 +138,7 @@ function createMan(companyCode) {
 document.addEventListener("DOMContentLoaded", () => {
   root.style.height = `${window.innerHeight}px`;
 
-  createMan(getRandomSP500());
+  createMan(getRandomSP500(sp500));
 
   prepareSearch();
 });
