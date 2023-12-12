@@ -44,26 +44,27 @@ function faceChangeExpression(img, newFace, faceNumber) {
 }
 
 function createMan(companyCode) {
+  const man = document.createElement("div");
+  man.classList.add("man");
   // creates minibox
-  const createInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
-    const infoBox = document.createElement("div");
-    infoBox.classList.add("info-box");
 
+  const infoBox = document.createElement("div");
+  infoBox.classList.add("info-box");
+  man.appendChild(infoBox);
+
+  const updateInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
     const change = (Math.random() * 10 - 5).toFixed(2);
 
     infoBox.innerHTML = `<span class='company-symbol'>${ticker}</span>
      </span><br> ${lastPrice} <span class=${
       change > 0 ? `ba` : `ab`
     }>${change}</span><br>NASDAQ`;
-    man.appendChild(infoBox);
   };
 
   const suitNumber = randomizer(3),
     tieNumber = randomizer(5),
     faceNumber = randomizer(5);
 
-  const man = document.createElement("div");
-  man.classList.add("man");
   man.style.background =
     "url('img/tie/" +
     tieNumber +
@@ -88,7 +89,7 @@ function createMan(companyCode) {
   );
 
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
-  getQuote(companyCode).then(createInfoBox);
+  getQuote(companyCode).then(updateInfoBox);
   root.appendChild(man);
 
   let value;
@@ -106,13 +107,13 @@ function createMan(companyCode) {
         })();
   }, 3000);
 
-  return { man, face, faceNumber, createInfoBox };
+  return { man, face, faceNumber, updateInfoBox };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   root.style.height = `${window.innerHeight}px`;
 
-  const { createInfoBox } = createMan(getRandomSP500(sp500));
+  const { updateInfoBox } = createMan(getRandomSP500(sp500));
 
-  prepareSearch(createInfoBox);
+  prepareSearch(updateInfoBox);
 });
