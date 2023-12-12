@@ -1,4 +1,7 @@
 Miguel Gómez & Claudia Maté
+https://claudiamate.com/2013/projects/theglobalmoodwebsite/
+
+
 
 Original project launched 2014
 
