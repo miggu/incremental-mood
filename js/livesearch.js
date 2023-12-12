@@ -1,4 +1,4 @@
-jQuery.fn.liveSearch = function (conf) {
+jQuery.fn.liveSearch = function (conf, createInfoBox) {
   var config = jQuery.extend(
     {
       url: "/search-results.php?q=",
@@ -125,8 +125,8 @@ jQuery.fn.liveSearch = function (conf) {
                 data
                   .filter(({ name = "" }) => name.includes(q))
                   .map(
-                    ({ name }) =>
-                      `<li class="liveresult__result"><a href="#">${name}</a></li>`
+                    ({ name, symbol }) =>
+                      `<li class="liveresult__result"><a href="#" symbol=${symbol}>${name}</a></li>`
                   )
                   .join("");
               input.removeClass(config.loadingClass);
@@ -147,8 +147,9 @@ jQuery.fn.liveSearch = function (conf) {
       });
 
     var addLinksForAPI = function () {
-      $("#result ul li a").bind("click", function () {
-        queryAPI($(this).attr("name"),);
+      $("#jquery-live-search li a").bind("click", function () {
+        console.log("me clickaste");
+        getQuote($(this).attr("symbol")).then(createInfoBox);
         liveSearch.slideUp(config.duration, function () {
           config.onSlideUp();
         });
@@ -158,7 +159,7 @@ jQuery.fn.liveSearch = function (conf) {
 };
 
 //  attaches a click event on the company name and subsequently prepares the field for jquery-live-search
-function prepareSearch() {
+function prepareSearch(createInfoBox) {
   root.addEventListener("click", function ({ target, target: { className } }) {
     if (className !== "company-symbol") return;
 
@@ -171,7 +172,7 @@ function prepareSearch() {
       // now we can activate the live search
 
       $('.search-location input[name="q"]')
-        .liveSearch({ url: "companies.json" + "?q=" })
+        .liveSearch({ url: "companies.json" + "?q=" }, createInfoBox)
         .focus();
     });
   });

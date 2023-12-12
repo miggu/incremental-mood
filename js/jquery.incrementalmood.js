@@ -24,12 +24,11 @@ function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
 //move this function to the private closure
-function getQuote(quote, fn = () => {}) {
+function getQuote(quote) {
   return fetch(
     `https://api.polygon.io/v2/aggs/ticker/${quote}/prev?adjusted=true&apiKey=DIxVAYuZEg9psGM2t4qQiEqcsIIgZUoJ `
   )
     .then((res) => res.json())
-    .then(fn)
     .catch(console.error);
 }
 
@@ -47,16 +46,16 @@ function faceChangeExpression(img, newFace, faceNumber) {
 function createMan(companyCode) {
   // creates minibox
   const createInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
-    const response = document.createElement("div");
-    response.classList.add("response");
+    const infoBox = document.createElement("div");
+    infoBox.classList.add("info-box");
 
     const change = (Math.random() * 10 - 5).toFixed(2);
 
-    response.innerHTML = `<span class='company-symbol'>${ticker}</span>
+    infoBox.innerHTML = `<span class='company-symbol'>${ticker}</span>
      </span><br> ${lastPrice} <span class=${
       change > 0 ? `ba` : `ab`
     }>${change}</span><br>NASDAQ`;
-    man.appendChild(response);
+    man.appendChild(infoBox);
   };
 
   const suitNumber = randomizer(3),
@@ -89,7 +88,7 @@ function createMan(companyCode) {
   );
 
   //  man.appendChild(getQuote("AAPL", createResponseDiv)); won't work as this will return a promise
-  getQuote(companyCode, createInfoBox);
+  getQuote(companyCode).then(createInfoBox);
   root.appendChild(man);
 
   let value;
@@ -107,13 +106,13 @@ function createMan(companyCode) {
         })();
   }, 3000);
 
-  return { man, face, faceNumber };
+  return { man, face, faceNumber, createInfoBox };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   root.style.height = `${window.innerHeight}px`;
 
-  createMan(getRandomSP500(sp500));
+  const { createInfoBox } = createMan(getRandomSP500(sp500));
 
-  prepareSearch();
+  prepareSearch(createInfoBox);
 });
