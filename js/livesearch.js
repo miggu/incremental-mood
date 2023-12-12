@@ -52,8 +52,6 @@ jQuery.fn.liveSearch = function (conf) {
       var inputDim = {
         left: tmpOffset.left,
         top: tmpOffset.top,
-        // width:        input.outerWidth(),
-
         width: 250,
         height: input.outerHeight(),
       };
@@ -150,7 +148,7 @@ jQuery.fn.liveSearch = function (conf) {
 
     var addLinksForAPI = function () {
       $("#result ul li a").bind("click", function () {
-        queryAPI($(this).attr("name"));
+        queryAPI($(this).attr("name"),);
         liveSearch.slideUp(config.duration, function () {
           config.onSlideUp();
         });
@@ -159,23 +157,20 @@ jQuery.fn.liveSearch = function (conf) {
   });
 };
 
-//  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
+//  attaches a click event on the company name and subsequently prepares the field for jquery-live-search
 function prepareSearch() {
   root.addEventListener("click", function ({ target, target: { className } }) {
     if (className !== "company-symbol") return;
-    function setPrice({ results: [{ o: lastPrice }] }) {}
 
-    getQuote("AAPL", setPrice);
     $(target).fadeOut(function () {
       $("<div/>", {
-        id: "jquery-live-search-example",
-        class: "myClass",
+        class: "search-location",
         html: '<input type="text" name="q">',
-      }).insertAfter($(this)); // end of creating div and prepending
+      }).insertAfter($(target)); // end of creating div and prepending
 
       // now we can activate the live search
 
-      $('#jquery-live-search-example input[name="q"]')
+      $('.search-location input[name="q"]')
         .liveSearch({ url: "companies.json" + "?q=" })
         .focus();
     });

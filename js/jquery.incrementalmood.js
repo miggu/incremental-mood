@@ -33,8 +33,6 @@ function getQuote(quote, fn = () => {}) {
     .catch(console.error);
 }
 
-
-
 // this function accepts newFace (String), and the posible values can be "ab" or "ba"//
 function faceChangeExpression(img, newFace, faceNumber) {
   flipbook(img, {
