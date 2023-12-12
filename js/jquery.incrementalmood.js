@@ -68,7 +68,6 @@ function faceChangeExpression(img, newFace, faceNumber) {
 }
 
 function createMan(companyCode) {
-
   // creates minibox
   const createInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
     const response = document.createElement("div");
@@ -87,8 +86,7 @@ function createMan(companyCode) {
     tieNumber = randomizer(5),
     faceNumber = randomizer(5);
 
-
-    const man = document.createElement("div");
+  const man = document.createElement("div");
   man.classList.add("man");
   man.style.background =
     "url('img/tie/" +

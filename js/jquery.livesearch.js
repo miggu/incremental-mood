@@ -57,7 +57,7 @@ jQuery.fn.liveSearch = function (conf) {
         top: tmpOffset.top,
         // width:        input.outerWidth(),
 
-        width: 400, //miggu : i had to change this to adapt for this application
+        width: 900, //miggu : i had to change this to adapt for this application
         height: input.outerHeight(),
       };
 
