@@ -141,11 +141,9 @@ div#result ul {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.example001 ul {
-  padding: 0;
-}
-.example001 ul li {
-  /* display: inline; */
+input[name="q"] {
+  border: 1px solid rgb(0, 0, 255);
+  width: 90%;
 }
 
 .liveresult__result {
