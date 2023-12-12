@@ -158,3 +158,26 @@ jQuery.fn.liveSearch = function (conf) {
     };
   });
 };
+
+//  attaches a click event on the company name and subsequently prepares the field for jquery-live-search-example
+function prepareSearch() {
+  root.addEventListener("click", function ({ target, target: { className } }) {
+    if (className !== "company-symbol") return;
+    function setPrice({ results: [{ o: lastPrice }] }) {}
+
+    getQuote("AAPL", setPrice);
+    $(target).fadeOut(function () {
+      $("<div/>", {
+        id: "jquery-live-search-example",
+        class: "myClass",
+        html: '<input type="text" name="q">',
+      }).insertAfter($(this)); // end of creating div and prepending
+
+      // now we can activate the live search
+
+      $('#jquery-live-search-example input[name="q"]')
+        .liveSearch({ url: "companies.json" + "?q=" })
+        .focus();
+    });
+  });
+}
