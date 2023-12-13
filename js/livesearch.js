@@ -1,4 +1,4 @@
-jQuery.fn.liveSearch = function (conf, updateInfoBox) {
+jQuery.fn.liveSearch = function (conf, updateInfoBox, $infoBox) {
   var config = jQuery.extend(
     {
       url: "/search-results.php?q=",
@@ -87,7 +87,6 @@ jQuery.fn.liveSearch = function (conf, updateInfoBox) {
         config.onSlideUp();
       });
     };
-
     input
       // On focus, if the live-search is empty, perform an new search
       // If not, just slide it down. Only do this if there's something in the input
@@ -135,7 +134,7 @@ jQuery.fn.liveSearch = function (conf, updateInfoBox) {
                 liveSearch.html(fromDatatoHtml(data));
                 showLiveSearch();
                 // here i activate all the links so they can later query the Company
-                addLinksForAPI();
+                addLinksForAPI($infoBox);
               } else {
                 hideLiveSearch();
               }
@@ -146,10 +145,12 @@ jQuery.fn.liveSearch = function (conf, updateInfoBox) {
         }
       });
 
-    var addLinksForAPI = function () {
+    var addLinksForAPI = function ($infoBox) {
       $("#jquery-live-search li a").bind("click", function () {
         console.log("me clickaste");
-        getQuote($(this).attr("symbol")).then(updateInfoBox);
+        getQuote($(this).attr("symbol")).then((data) =>
+          updateInfoBox(data, $infoBox)
+        );
         liveSearch.slideUp(config.duration, function () {
           config.onSlideUp();
         });
@@ -162,18 +163,26 @@ jQuery.fn.liveSearch = function (conf, updateInfoBox) {
 function prepareSearch(updateInfoBox) {
   root.addEventListener("click", function ({ target, target: { className } }) {
     if (className !== "company-symbol") return;
-
+    console.log($(target).parent());
+    const $infoBox = $(target).parent();
     $(target).fadeOut(function () {
       $("<div/>", {
         class: "search-location",
         html: '<input type="text" name="q">',
       }).insertAfter($(target)); // end of creating div and prepending
 
-      // now we can activate the live search
-
       $('.search-location input[name="q"]')
-        .liveSearch({ url: "companies.json" + "?q=" }, updateInfoBox)
+        .liveSearch({ url: "companies.json" + "?q=" }, updateInfoBox, $infoBox)
         .focus();
     });
   });
 }
+
+function activateSearch() {}
+
+operator.addEventListener(
+  "click",
+  function ({ target, target: { className } }) {
+    const { updateInfoBox } = createMan(getRandomSP500(sp500));
+  }
+);

@@ -48,11 +48,15 @@ function createMan(companyCode) {
   man.classList.add("man");
   // creates minibox
 
-  const infoBox = document.createElement("div");
+  let infoBox = document.createElement("div");
   infoBox.classList.add("info-box");
   man.appendChild(infoBox);
 
-  const updateInfoBox = ({ ticker, results: [{ o: lastPrice }] }) => {
+  const updateInfoBox = ({ ticker, results: [{ o: lastPrice }] }, $infoBox) => {
+    if ($infoBox) {
+      infoBox = $infoBox[0];
+    }
+
     const change = (Math.random() * 10 - 5).toFixed(2);
 
     infoBox.innerHTML = `<span class='company-symbol'>${ticker}</span>
