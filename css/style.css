@@ -16,7 +16,8 @@ body {
 button#operator {
   width: 35px;
   height: 35px;
-  position: absolute;
+  position: fixed;
+  z-index: 999;
   right: 35px;
   margin: 1%;
   flex: 1 20%;
