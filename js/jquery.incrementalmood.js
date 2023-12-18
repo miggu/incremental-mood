@@ -23,6 +23,7 @@ const randomIncrement = (value) => Math.random() * value;
 function randomizer(n) {
   return Math.floor(Math.random() * n + 1);
 }
+
 //move this function to the private closure
 function getQuote(quote) {
   return fetch(
@@ -46,8 +47,8 @@ function faceChangeExpression(img, newFace, faceNumber) {
 function createMan(companyCode) {
   const man = document.createElement("div");
   man.classList.add("man");
-  // creates minibox
 
+  // creates minibox
   let infoBox = document.createElement("div");
   infoBox.classList.add("info-box");
   man.appendChild(infoBox);
@@ -65,9 +66,9 @@ function createMan(companyCode) {
     }>${change}</span><br>NASDAQ`;
   };
 
-  const suitNumber = randomizer(3),
-    tieNumber = randomizer(5),
-    faceNumber = randomizer(5);
+  const suitNumber = randomizer(3);
+  const tieNumber = randomizer(5);
+  const faceNumber = randomizer(5);
 
   man.style.background =
     "url('img/tie/" +
