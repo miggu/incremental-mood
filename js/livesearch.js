@@ -1,4 +1,4 @@
-jQuery.fn.liveSearch = function (conf, updateInfoBox, $infoBox) {
+const liveSearch = function (conf, updateInfoBox, $infoBox) {
   var config = jQuery.extend(
     {
       url: "/search-results.php?q=",
@@ -186,3 +186,55 @@ operator.addEventListener(
     const { updateInfoBox } = createMan(getRandomSP500(sp500));
   }
 );
+
+function slideUpVanilla(el, speed = 3) {
+  let height = el.offsetHeight;
+  el.style.overflow = "hidden";
+  el.style.height = height + "px";
+
+  let i = 100;
+  const end = () => {
+    el.style.display = "none";
+    el.style.height = "auto";
+  };
+
+  const step = () => {
+    el.style.height = height * (i / 100) + "px";
+    i = i - speed;
+    i > 1 ? window.requestAnimationFrame(step) : end();
+  };
+  window.requestAnimationFrame(step);
+}
+
+function slideDownVanilla(el, speed = 3) {
+  el.style.display = "block";
+  let height = el.offsetHeight;
+  let i = 0;
+  const end = () => {};
+  const step = () => {
+    el.style.height = height * (i / 100) + "px";
+    i = i + speed;
+    console.log(i);
+    i < 100 ? window.requestAnimationFrame(step) : end();
+  };
+  window.requestAnimationFrame(step);
+}
+
+const slideUp = document.querySelector(".unordered-list");
+const toggle = document.querySelector(".toggle");
+
+
+
+    toggle.addEventListener("click", ({ target: { classList } = {} }) => {
+      classList.contains("show")
+        ? (() => {
+            slideUpVanilla(slideUp);
+            classList.replace("show", "hide");
+          })()
+        : classList.contains("hide")
+        ? (() => {
+            slideDownVanilla(slideUp);
+            classList.replace("hide", "show");
+          })()
+        : () => {};
+    });
